@@ -2,18 +2,18 @@ package onecall
 
 import "sync"
 
-type Group struct {
+type group struct {
 	mu    sync.Mutex
 	calls map[string]*call
 }
 
-func NewGroup() *Group {
-	return &Group{
+func NewGroup() *group {
+	return &group{
 		calls: make(map[string]*call),
 	}
 }
 
-func (g *Group) Do(key string, f func() (any, error)) (any, error) {
+func (g *group) Do(key string, f func() (any, error)) (any, error) {
 	g.mu.Lock()
 	c, found := g.calls[key]
 
